@@ -6,31 +6,31 @@
     class="zfile-text-viewer-dialog"
     :title="name"
     width="90%"
-    :showFooter="false"
+    :show-footer="false"
   >
-    <TextViewer :file-name="name"
-                :file-url="url"
-                v-if="visible && name.indexOf('.md') === -1"/>
-    <MarkdownViewer :file-name="name"
-                    :file-url="url"
-                    v-if="visible && name.indexOf('.md') !== -1"/>
+    <TextViewer v-if="visible && name.indexOf('.md') === -1" :file-name="name" :file-url="url" />
+    <MarkdownViewer
+      v-if="visible && name.indexOf('.md') !== -1"
+      :file-name="name"
+      :file-url="url"
+    />
   </z-dialog>
 </template>
 
 <script setup>
-import ZDialog from "~/components/common/dialog/ZDialog.vue";
-import MarkdownViewerDialogAsyncLoading from "~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue";
+import ZDialog from '~/components/common/dialog/ZDialog.vue';
+import MarkdownViewerDialogAsyncLoading from '~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue';
 
 const TextViewer = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/TextViewer.vue"),
-  loadingComponent: MarkdownViewerDialogAsyncLoading
-})
+  loader: () => import('~/components/file/preview/TextViewer.vue'),
+  loadingComponent: MarkdownViewerDialogAsyncLoading,
+});
 const MarkdownViewer = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/MarkdownViewer.vue"),
-  loadingComponent: MarkdownViewerDialogAsyncLoading
-})
+  loader: () => import('~/components/file/preview/MarkdownViewer.vue'),
+  loadingComponent: MarkdownViewerDialogAsyncLoading,
+});
 
-import useTextViewerDialog from "~/composables/file/useTextViewerDialog";
+import useTextViewerDialog from '~/composables/file/useTextViewerDialog';
 const { visible, name, url } = useTextViewerDialog();
 </script>
 
@@ -40,7 +40,7 @@ const { visible, name, url } = useTextViewerDialog();
   height: 90%;
 
   .el-dialog__body {
-    @apply overflow-hidden p-0 h-full;
+    @apply h-full overflow-hidden p-0;
   }
 
   &.is-fullscreen {

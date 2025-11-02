@@ -2,36 +2,34 @@ const selectRows = ref([]);
 const selectFun = ref({
   clearSelection: null,
   toggleRowSelection: null,
-  toggleAllSelection: null
-})
-
+  toggleAllSelection: null,
+});
 
 export default function useFileSelect() {
-
   const initSelectFun = (clearSelection, toggleRowSelection, toggleAllSelection) => {
     selectFun.value.clearSelection = clearSelection;
     selectFun.value.toggleRowSelection = toggleRowSelection;
     selectFun.value.toggleAllSelection = toggleAllSelection;
-  }
+  };
 
   const clearSelection = () => {
     selectFun.value.clearSelection();
-  }
+  };
 
   const toggleRowSelection = (row, selected) => {
     if (row?.type === 'BACK') {
       return;
     }
     selectFun.value.toggleRowSelection(row, selected);
-  }
+  };
 
   const toggleAllSelection = () => {
     selectFun.value.toggleAllSelection();
-  }
+  };
 
   // 文件是否可被选择
   const checkSelectable = (row) => {
-    return row.type === "FILE" || row.type === "FOLDER";
+    return row.type === 'FILE' || row.type === 'FOLDER';
   };
 
   // 当前最后选中的文件行
@@ -46,14 +44,14 @@ export default function useFileSelect() {
   // 当前选中的文件
   const selectFiles = computed(() => {
     return selectRows.value.filter((row) => {
-      return row.type === "FILE";
+      return row.type === 'FILE';
     });
   });
 
   // 当前选中的文件夹
   const selectFolders = computed(() => {
     return selectRows.value.filter((row) => {
-      return row.type === "FOLDER";
+      return row.type === 'FOLDER';
     });
   });
 
@@ -65,7 +63,7 @@ export default function useFileSelect() {
   // 行选中 class
   const tableRowClassName = ({ row, rowIndex }) => {
     row.index = rowIndex;
-    return selectRows.value.indexOf(row) !== -1 ? "select-row" : "";
+    return selectRows.value.indexOf(row) !== -1 ? 'select-row' : '';
   };
 
   // 多选统计信息
@@ -87,16 +85,22 @@ export default function useFileSelect() {
       isAllFile,
       isAllFolder,
       isSingleSelectFile,
-      isSingleSelectFolder
+      isSingleSelectFolder,
     };
   });
 
   return {
     initSelectFun,
-    checkSelectable, tableRowClassName, selectRowsChange,
-    selectRow, selectRows,
-    selectFiles, selectFolders,
+    checkSelectable,
+    tableRowClassName,
+    selectRowsChange,
+    selectRow,
+    selectRows,
+    selectFiles,
+    selectFolders,
     selectStatistics,
-    clearSelection, toggleRowSelection, toggleAllSelection
+    clearSelection,
+    toggleRowSelection,
+    toggleAllSelection,
   };
 }

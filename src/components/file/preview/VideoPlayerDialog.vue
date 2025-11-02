@@ -6,22 +6,22 @@
     width="90%"
     class="zfile-video-player-dialog"
     :title="name"
-    :showFooter="false"
+    :show-footer="false"
   >
     <video-player v-if="visible" />
   </z-dialog>
 </template>
 
 <script setup>
-import ZDialog from "~/components/common/dialog/ZDialog.vue";
-import VideoPlayerAsyncLoading from "~/components/file/preview/VideoPlayerAsyncLoading.vue";
+import ZDialog from '~/components/common/dialog/ZDialog.vue';
+import VideoPlayerAsyncLoading from '~/components/file/preview/VideoPlayerAsyncLoading.vue';
 
 const VideoPlayer = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/VideoPlayer.vue"),
-  loadingComponent: VideoPlayerAsyncLoading
-})
+  loader: () => import('~/components/file/preview/VideoPlayer.vue'),
+  loadingComponent: VideoPlayerAsyncLoading,
+});
 
-import useVideoPlayerDialog from "~/composables/file/useVideoPlayerDialog";
+import useVideoPlayerDialog from '~/composables/file/useVideoPlayerDialog';
 const { visible, name } = useVideoPlayerDialog();
 </script>
 

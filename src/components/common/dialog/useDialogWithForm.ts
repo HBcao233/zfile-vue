@@ -1,10 +1,7 @@
-import { FormInstance } from "element-plus";
-import { Ref, ref } from "vue";
+import { FormInstance } from 'element-plus';
+import { Ref, ref } from 'vue';
 
-export default function useDialogFn(
-  formInstance: Ref<FormInstance|undefined>
-) {
-
+export default function useDialogFn(formInstance: Ref<FormInstance | undefined>) {
   const visible = ref(false);
 
   const closeDialog = () => {

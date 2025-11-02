@@ -6,29 +6,29 @@
     width="90%"
     class="zfile-office-viewer-dialog"
     :title="name"
-    :showFooter="false"
+    :show-footer="false"
   >
     <office-viewer v-if="visible" :file-name="name" />
   </z-dialog>
 </template>
 
 <script setup>
-import ZDialog from "~/components/common/dialog/ZDialog.vue";
-import MarkdownViewerDialogAsyncLoading from "~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue";
+import ZDialog from '~/components/common/dialog/ZDialog.vue';
+import MarkdownViewerDialogAsyncLoading from '~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue';
 
 const OfficeViewer = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/OfficeViewer.vue"),
-  loadingComponent: MarkdownViewerDialogAsyncLoading
-})
+  loader: () => import('~/components/file/preview/OfficeViewer.vue'),
+  loadingComponent: MarkdownViewerDialogAsyncLoading,
+});
 
-import useOfficeViewerDialog from "~/composables/file/useOfficeViewerDialog";
+import useOfficeViewerDialog from '~/composables/file/useOfficeViewerDialog';
 const { visible, name } = useOfficeViewerDialog();
 </script>
 
 <style scoped lang="scss">
 :deep(.el-dialog) {
   // 内容无边框
-  @apply p-0 h-[80vh];
+  @apply h-[80vh] p-0;
 
   .z-dialog-content {
     @apply h-[80vh];

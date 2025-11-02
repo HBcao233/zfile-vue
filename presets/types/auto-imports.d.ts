@@ -16,7 +16,7 @@ declare global {
   const allowShortcuts: typeof import('../../src/composables/file/useTableOperator.js')['allowShortcuts']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
-  const baseSsoConfig: typeof import('../../src/composables/admin/sso/sso.js')['baseSsoConfig']
+  const baseSsoConfig: typeof import('../../src/composables/admin/sso/baseSsoConfig.js')['baseSsoConfig']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -64,6 +64,7 @@ declare global {
   const html: typeof import('../../src/components/vue-codemirror/lang-code/html/index')['default']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
+  const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
@@ -115,6 +116,7 @@ declare global {
   const powershell: typeof import('../../src/components/vue-codemirror/lang-code/powershell/index')['default']
   const prompt: typeof import('../../src/components/messageBox/prompt/index')['default']
   const provide: typeof import('vue')['provide']
+  const provideLocal: typeof import('@vueuse/core')['provideLocal']
   const python: typeof import('../../src/components/vue-codemirror/lang-code/python/index')['default']
   const r: typeof import('../../src/components/vue-codemirror/lang-code/r/index')['default']
   const reactify: typeof import('@vueuse/core')['reactify']
@@ -143,7 +145,6 @@ declare global {
   const shallowRef: typeof import('vue')['shallowRef']
   const shell: typeof import('../../src/components/vue-codemirror/lang-code/shell/index')['default']
   const sql: typeof import('../../src/components/vue-codemirror/lang-code/sql/index')['default']
-  const ssoDocs: typeof import('../../src/composables/admin/sso/sso.js')['ssoDocs']
   const storageConfig: typeof import('../../src/stores/storage-config')['default']
   const storageCopy: typeof import('../../src/composables/admin/storage/storage-copy.js')['default']
   const storageFilter: typeof import('../../src/composables/admin/storage/storage-filter.js')['default']
@@ -204,6 +205,7 @@ declare global {
   const useCached: typeof import('@vueuse/core')['useCached']
   const useClientInfo: typeof import('../../src/composables/admin/useClientInfo.js')['default']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
+  const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
@@ -268,6 +270,7 @@ declare global {
   const useInterval: typeof import('@vueuse/core')['useInterval']
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
+  const useKkFileViewDialog: typeof import('../../src/composables/file/useKkFileViewDialog.js')['default']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
   const useLink: typeof import('vue-router')['useLink']
   const useLinkSetting: typeof import('../../src/composables/admin/link/useLinkSetting.js')['default']
@@ -420,7 +423,7 @@ declare module 'vue' {
     readonly allowShortcuts: UnwrapRef<typeof import('../../src/composables/file/useTableOperator.js')['allowShortcuts']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
-    readonly baseSsoConfig: UnwrapRef<typeof import('../../src/composables/admin/sso/sso.js')['baseSsoConfig']>
+    readonly baseSsoConfig: UnwrapRef<typeof import('../../src/composables/admin/sso/baseSsoConfig.js')['baseSsoConfig']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -468,6 +471,7 @@ declare module 'vue' {
     readonly html: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/html/index')['default']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
+    readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -519,6 +523,7 @@ declare module 'vue' {
     readonly powershell: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/powershell/index')['default']>
     readonly prompt: UnwrapRef<typeof import('../../src/components/messageBox/prompt/index')['default']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
+    readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly python: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/python/index')['default']>
     readonly r: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/r/index')['default']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
@@ -547,7 +552,6 @@ declare module 'vue' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly shell: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/shell/index')['default']>
     readonly sql: UnwrapRef<typeof import('../../src/components/vue-codemirror/lang-code/sql/index')['default']>
-    readonly ssoDocs: UnwrapRef<typeof import('../../src/composables/admin/sso/sso.js')['ssoDocs']>
     readonly storageConfig: UnwrapRef<typeof import('../../src/stores/storage-config')['default']>
     readonly storageCopy: UnwrapRef<typeof import('../../src/composables/admin/storage/storage-copy.js')['default']>
     readonly storageFilter: UnwrapRef<typeof import('../../src/composables/admin/storage/storage-filter.js')['default']>
@@ -608,6 +612,7 @@ declare module 'vue' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClientInfo: UnwrapRef<typeof import('../../src/composables/admin/useClientInfo.js')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
+    readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
@@ -672,6 +677,7 @@ declare module 'vue' {
     readonly useInterval: UnwrapRef<typeof import('@vueuse/core')['useInterval']>
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
+    readonly useKkFileViewDialog: UnwrapRef<typeof import('../../src/composables/file/useKkFileViewDialog.js')['default']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useLinkSetting: UnwrapRef<typeof import('../../src/composables/admin/link/useLinkSetting.js')['default']>

@@ -1,9 +1,9 @@
-import axios from "~/http/request";
+import axios from '~/http/request';
 
 export const getLoginLogListReq = (data) => {
   return axios({
-    url: "/admin/login/log/list",
-    method: "get",
-    data
-  })
-}
+    url: '/admin/login/log/list',
+    method: 'get',
+    data,
+  });
+};

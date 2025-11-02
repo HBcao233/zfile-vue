@@ -1,8 +1,6 @@
-import {App} from 'vue'
+import { App } from 'vue';
 import { setGlobalOptions } from 'vue-request';
 
-setGlobalOptions({
-})
+setGlobalOptions({});
 
-export default (app: App) => {
-}
+export default (app: App) => {};

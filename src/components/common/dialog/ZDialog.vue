@@ -10,15 +10,17 @@
     >
       <template #header>
         <div class="z-dialog-title">
-         {{ title }}
+          {{ title }}
         </div>
         <div class="z-dialog-title-btns">
-          <el-icon v-if="isFullScreenBtn" @click="handleFullscreen"><ArrowsPointingOutIcon /></el-icon>
+          <el-icon v-if="isFullScreenBtn" @click="handleFullscreen"
+            ><ArrowsPointingOutIcon
+          /></el-icon>
           <el-icon size="20" @click="handleClose('close')"><XMarkIcon /></el-icon>
         </div>
       </template>
 
-      <div class="z-dialog-content" v-loading="loading">
+      <div v-loading="loading" class="z-dialog-content">
         <slot></slot>
       </div>
 
@@ -33,22 +35,22 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from "vue";
+import { computed, ref, useAttrs, useSlots } from 'vue';
 import { ArrowsPointingOutIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { ElDialog, ElIcon, ElButton } from "element-plus";
-import { DialogCloseType, PropsType } from "./types";
+import { ElDialog, ElIcon, ElButton } from 'element-plus';
+import { DialogCloseType, PropsType } from './types';
 
 const attrs = useAttrs();
 const slots = useSlots();
 
 const props = withDefaults(defineProps<PropsType>(), {
-  title: "",
+  title: '',
   isDraggable: false,
   modelValue: false,
   hiddenFullBtn: false,
   loading: false,
-  confirmText: "确认",
-  cancelText: "关闭",
+  confirmText: '确认',
+  cancelText: '关闭',
   destroyOnClose: false,
   draggable: false,
   autoFullScreen: false,
@@ -57,9 +59,9 @@ const props = withDefaults(defineProps<PropsType>(), {
 });
 
 const emits = defineEmits<{
-  (e: "update:modelValue"): void;
-  (e: "confirm"): void;
-  (e: "close", type: DialogCloseType): void;
+  (e: 'update:modelValue'): void;
+  (e: 'confirm'): void;
+  (e: 'close', type: DialogCloseType): void;
 }>();
 
 const isFullscreen = ref(props.autoFullScreen ? window.innerWidth < 768 : false);
@@ -77,25 +79,25 @@ const handleFullscreen = () => {
 
 // 发生了原生的关闭事件(点击遮罩，按 esc 键)
 const handleNativeClose = () => {
-  handleClose("close");
+  handleClose('close');
 };
 
 const handleClose = (type: DialogCloseType) => {
   // 如果定义了原生的 before-close 属性，则先执行 before-close 方法
-  if (Reflect.has(attrs, "before-close") && typeof attrs["before-close"] === "function") {
-    attrs["before-close"]();
+  if (Reflect.has(attrs, 'before-close') && typeof attrs['before-close'] === 'function') {
+    attrs['before-close']();
   }
 
   // 判断 emits 里是否有 close 事件，有则触发，没有则直接更新 modelValue
   if (props.onClose) {
-    emits("close", type)
+    emits('close', type);
   } else {
-    emits("update:modelValue");
+    emits('update:modelValue');
   }
 };
 
 const handleConfirm = () => {
-  emits("confirm");
+  emits('confirm');
 };
 
 defineExpose({
@@ -145,7 +147,8 @@ defineExpose({
     font-size: 16px;
     cursor: pointer;
   }
-  i:hover, i:focus {
+  i:hover,
+  i:focus {
     color: var(--el-color-primary);
   }
   i:last-child {
@@ -162,5 +165,4 @@ defineExpose({
     @apply pb-4;
   }
 }
-
 </style>

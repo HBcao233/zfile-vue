@@ -1,23 +1,29 @@
 <template>
-  <div ref="fileRef" class="zfile-card-file-view-wrapper box animate__animated animate__fadeIn"
-	   v-if="!fileDataStore.imgMode"
-       v-loading="basicLoading"
-       element-loading-text="拼命加载中"
-       element-loading-background="rgba(255, 255, 255, 0.6)"
-       :class="'zfile-card-size-' + storageConfigStore.globalConfig?.tableSize">
-    <div v-for="item in fileDataStore.fileList" :key="item.index"
-         @contextmenu="showCardFileMenu(item, $event)"
-         @click="clickRow(item)"
-         @dblclick="dblclickRow(item)"
-         :class="tableRowClassName({row: item, rowIndex: item.index})"
-         class="zfile-card-file-item">
+  <div
+    v-if="!fileDataStore.imgMode"
+    ref="fileRef"
+    v-loading="basicLoading"
+    class="zfile-card-file-view-wrapper box animate__animated animate__fadeIn"
+    element-loading-text="拼命加载中"
+    element-loading-background="rgba(255, 255, 255, 0.6)"
+    :class="'zfile-card-size-' + storageConfigStore.globalConfig?.tableSize"
+  >
+    <div
+      v-for="item in fileDataStore.fileList"
+      :key="item.index"
+      :class="tableRowClassName({ row: item, rowIndex: item.index })"
+      class="zfile-card-file-item"
+      @contextmenu="showCardFileMenu(item, $event)"
+      @click="clickRow(item)"
+      @dblclick="dblclickRow(item)"
+    >
       <div class="mb-3">
         <div class="zfile-card-file-icon">
           <svg-icon :name="'file-type-' + item.icon"></svg-icon>
         </div>
       </div>
       <span class="zfile-card-file-name">
-					{{ item.name }}
+        {{ item.name }}
       </span>
     </div>
   </div>
@@ -25,24 +31,24 @@
 
 <script setup>
 // 业务代码
-import useFileDataStore from "~/stores/file-data";
+import useFileDataStore from '~/stores/file-data';
 let fileDataStore = useFileDataStore();
 
-import useStorageConfigStore from "~/stores/storage-config";
+import useStorageConfigStore from '~/stores/storage-config';
 let storageConfigStore = useStorageConfigStore();
 
-import useFileLoading from "~/composables/file/useFileLoading";
+import useFileLoading from '~/composables/file/useFileLoading';
 const { basicLoading } = useFileLoading();
 
 // 表格选择
-import useFileSelect from "~/composables/file/useFileSelect";
+import useFileSelect from '~/composables/file/useFileSelect';
 let { initSelectFun, selectRowsChange, tableRowClassName } = useFileSelect();
 
 // 文件操作
-import useTableOperator from "~/composables/file/useTableOperator";
+import useTableOperator from '~/composables/file/useTableOperator';
 const { tableClickRow, tableDbClickRow } = useTableOperator();
 
-import useFileContextMenu from "~/composables/file/useFileContextMenu";
+import useFileContextMenu from '~/composables/file/useFileContextMenu';
 const { showFileMenu } = useFileContextMenu();
 
 const selectRows = ref([]);
@@ -98,30 +104,24 @@ const toggleAllSelection = () => {
 };
 
 onMounted(() => {
-  initSelectFun(
-    clearSelection,
-    toggleRowSelection,
-    toggleAllSelection
-  );
+  initSelectFun(clearSelection, toggleRowSelection, toggleAllSelection);
 });
 </script>
 
 <style scoped lang="scss">
 .zfile-card-file-view-wrapper {
-  @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-1 mt-4 select-none bg-white;
+  @apply mt-4 grid select-none grid-cols-2 gap-1 bg-white md:grid-cols-4 lg:grid-cols-[repeat(auto-fill,minmax(150px,1fr))];
 }
 
 .zfile-card-file-item {
-  @apply relative flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow
-     hover:bg-gray-50 cursor-pointer;
-  ;
-
+  @apply relative flex cursor-pointer flex-col items-center rounded-lg bg-white p-4 shadow-sm transition-shadow
+     hover:bg-gray-50 hover:shadow-md;
   .zfile-card-file-icon {
-    @apply w-12 h-12 rounded-lg flex items-center justify-center;
+    @apply flex h-12 w-12 items-center justify-center rounded-lg;
   }
 
   .zfile-card-file-name {
-    @apply text-sm text-center text-gray-600 line-clamp-1 break-all;
+    @apply line-clamp-1 break-all text-center text-sm text-gray-600;
   }
 }
 
@@ -129,7 +129,7 @@ onMounted(() => {
 .zfile-card-size-small {
   @apply gap-2;
   .zfile-card-file-icon {
-    @apply w-8 h-8;
+    @apply h-8 w-8;
   }
 
   .zfile-card-file-name {
@@ -140,7 +140,7 @@ onMounted(() => {
 // large 模式
 .zfile-card-size-large {
   .zfile-card-file-icon {
-    @apply w-16 h-16;
+    @apply h-16 w-16;
   }
 
   .zfile-card-file-name {

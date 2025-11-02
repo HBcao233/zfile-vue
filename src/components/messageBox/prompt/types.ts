@@ -1,10 +1,9 @@
 // 声明返回值类型
 export interface ConfirmResult {
-  checkbox: Boolean
-  value: String
-  type: 'cancel' | 'close' | 'confirm'
+  checkbox: Boolean;
+  value: String;
+  type: 'cancel' | 'close' | 'confirm';
 }
-
 
 // 声明 Options 类型
 export interface Props {
@@ -12,7 +11,7 @@ export interface Props {
   message?: String;
   confirmButtonText?: String;
   cancelButtonText?: String;
-  inputType?: "text" | "password";
+  inputType?: 'text' | 'password';
   inputPlaceholder?: String;
   inputDefault?: String;
   showPassword?: Boolean;

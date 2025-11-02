@@ -2,7 +2,6 @@ const routerRef = ref(null);
 const routeRef = ref(null);
 
 export default function useRouterData(initRouter, initRoute) {
-
   if (initRouter && !routerRef.value) {
     routerRef.value = initRouter;
   }
@@ -33,7 +32,6 @@ export default function useRouterData(initRouter, initRoute) {
     routerRef,
     storageKey,
     currentPath,
-    fullpath
+    fullpath,
   };
-
 }

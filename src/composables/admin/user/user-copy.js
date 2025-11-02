@@ -1,10 +1,10 @@
-import { copyUserReq, checkUsernameDuplicateReq } from "~/api/admin/admin-user";
+import { copyUserReq, checkUsernameDuplicateReq } from '~/api/admin/admin-user';
 
 const formData = reactive({
   toUsername: '',
   toNickname: '',
   toPassword: '',
-  fromId: null
+  fromId: null,
 });
 
 const rules = {
@@ -23,29 +23,26 @@ const rules = {
           } else {
             callback();
           }
-        })
-      }
-    }
+        });
+      },
+    },
   ],
-  toNickname: [
-    { required: true, message: '请输入新用户昵称', trigger: 'blur' },
-  ],
-}
+  toNickname: [{ required: true, message: '请输入新用户昵称', trigger: 'blur' }],
+};
 
 const dialogVisible = ref(false);
 const saveLoading = ref(false);
 export default function useUserCopy() {
-
   const openDialog = (row) => {
     dialogVisible.value = true;
     formData.fromId = row.id;
     formData.toUsername = row.username;
     formData.toNickname = row.nickname;
-  }
+  };
 
   const closeDialog = () => {
     dialogVisible.value = false;
-  }
+  };
 
   const userCopyFormRef = ref(null);
 
@@ -53,13 +50,15 @@ export default function useUserCopy() {
     saveLoading.value = true;
     userCopyFormRef.value.validate((valid) => {
       if (valid) {
-        copyUserReq(formData).then((res) => {
+        copyUserReq(formData)
+          .then((res) => {
             ElMessage.success('复制成功');
             dialogVisible.value = false;
             emit('close');
-        }).finally(() => {
-          saveLoading.value = false;
-        })
+          })
+          .finally(() => {
+            saveLoading.value = false;
+          });
       } else {
         saveLoading.value = false;
       }
@@ -74,6 +73,6 @@ export default function useUserCopy() {
     rules,
     userCopyFormRef,
     submitForm,
-    saveLoading
-  }
+    saveLoading,
+  };
 }

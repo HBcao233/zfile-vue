@@ -5,22 +5,22 @@
     top="5vh"
     class="zfile-pdf-viewer-dialog"
     :title="name"
-    :showFooter="false"
+    :show-footer="false"
   >
     <pdf-viewer v-if="visible" :file-name="name" :file-url="url" />
   </z-dialog>
 </template>
 
 <script setup>
-import ZDialog from "~/components/common/dialog/ZDialog.vue";
-import MarkdownViewerDialogAsyncLoading from "~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue";
+import ZDialog from '~/components/common/dialog/ZDialog.vue';
+import MarkdownViewerDialogAsyncLoading from '~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue';
 
 const PdfViewer = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/PdfViewer.vue"),
-  loadingComponent: MarkdownViewerDialogAsyncLoading
-})
+  loader: () => import('~/components/file/preview/PdfViewer.vue'),
+  loadingComponent: MarkdownViewerDialogAsyncLoading,
+});
 
-import usePdfViewerDialog from "~/composables/file/usePdfViewerDialog";
+import usePdfViewerDialog from '~/composables/file/usePdfViewerDialog';
 const { visible, name, url } = usePdfViewerDialog();
 </script>
 

@@ -1,3 +1,3 @@
-import { json } from '@codemirror/lang-json'
+import { json } from '@codemirror/lang-json';
 
-export default json
+export default json;

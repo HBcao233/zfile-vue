@@ -1,14 +1,12 @@
 <template>
-	<index />
+  <index />
 </template>
 
 <script setup>
-import Index from '~/pages/admin/user-edit/index.vue'
+import Index from '~/pages/admin/user-edit/index.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:

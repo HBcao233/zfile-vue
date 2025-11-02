@@ -1,32 +1,50 @@
 <template>
-  <nav class="flex w-full relative z-breadcrumbs-root" ref="parentEl">
-    <ol role="list" ref="breadcrumbEl" class="z-breadcrumbs">
+  <nav ref="parentEl" class="z-breadcrumbs-root relative flex w-full">
+    <ol ref="breadcrumbEl" role="list" class="z-breadcrumbs">
       <li v-for="(item, index) in foldBreadcrumb.head" :key="item.index">
         <div class="z-breadcrumbs__item">
-          <ChevronRightIcon class="z-breadcrumbs__icon" v-if="index !== 0" />
-          <a @click.prevent.stop="clickBreadcrumb(item)" :href="item.href" class="z-breadcrumbs__text">{{ item.name }}</a>
+          <ChevronRightIcon v-if="index !== 0" class="z-breadcrumbs__icon" />
+          <a
+            :href="item.href"
+            class="z-breadcrumbs__text"
+            @click.prevent.stop="clickBreadcrumb(item)"
+            >{{ item.name }}</a
+          >
         </div>
       </li>
       <li v-if="$slots['breadcrumb-item']">
         <div class="z-breadcrumbs__item">
-          <a class="ml-3 text-[13px]"><slot name="breadcrumb-item"/></a>
+          <a class="ml-3 text-[13px]"><slot name="breadcrumb-item" /></a>
         </div>
       </li>
       <template v-else>
         <li v-if="foldBreadcrumb.fold?.length > 0" class="z-breadcrumbs__fold">
           <div class="z-breadcrumbs__item">
-            <ChevronRightIcon class="z-breadcrumbs__icon" v-if="foldBreadcrumb.head.length > 0" />
-            <el-dropdown popper-class="z-breadcrumbs__popper" trigger="click" placement="bottom-start">
+            <ChevronRightIcon v-if="foldBreadcrumb.head.length > 0" class="z-breadcrumbs__icon" />
+            <el-dropdown
+              popper-class="z-breadcrumbs__popper"
+              trigger="click"
+              placement="bottom-start"
+            >
               <span class="el-dropdown-link">
-                <a class="z-breadcrumbs__ellipsis">
-                  ···
-                </a>
+                <a class="z-breadcrumbs__ellipsis"> ··· </a>
               </span>
               <template #dropdown>
                 <el-dropdown-menu class="w-48 sm:w-72">
-                  <el-dropdown-item v-for="(item, index) in foldBreadcrumb.fold" :key="item.index" @click.prevent.stop="clickBreadcrumb(item)">
-                    <a :href="item?.href"
-                       :class="[item === props.items[props.items.length - 1] ? 'cursor-not-allowed text-gray-300' : 'text-gray-600 hover:text-gray-700 font-semibold', '  max-w-md overflow-ellipsis overflow-hidden whitespace-nowrap']">
+                  <el-dropdown-item
+                    v-for="(item, index) in foldBreadcrumb.fold"
+                    :key="item.index"
+                    @click.prevent.stop="clickBreadcrumb(item)"
+                  >
+                    <a
+                      :href="item?.href"
+                      :class="[
+                        item === props.items[props.items.length - 1]
+                          ? 'cursor-not-allowed text-gray-300'
+                          : 'font-semibold text-gray-600 hover:text-gray-700',
+                        '  max-w-md overflow-hidden overflow-ellipsis whitespace-nowrap',
+                      ]"
+                    >
                       {{ item?.name }}
                     </a>
                   </el-dropdown-item>
@@ -35,64 +53,78 @@
             </el-dropdown>
           </div>
         </li>
-        <li v-for="(item, index) in foldBreadcrumb.show" :key="item.name">
+        <li v-for="(item, index) in foldBreadcrumb.show" :key="item?.name">
           <div class="z-breadcrumbs__item" @click="debugFn">
-            <ChevronRightIcon class="z-breadcrumbs__icon" v-if="item !== props.items[0]" />
-            <a @click.prevent.stop="clickBreadcrumb(item)" :href="item.href" :class="index === foldBreadcrumb.show.length - 1 ? 'disable' : ''" class="z-breadcrumbs__text">{{ item.name }}</a>
+            <ChevronRightIcon v-if="item !== props.items[0]" class="z-breadcrumbs__icon" />
+            <a
+              :href="item?.href"
+              :class="index === foldBreadcrumb.show.length - 1 ? 'disable' : ''"
+              class="z-breadcrumbs__text"
+              @click.prevent.stop="clickBreadcrumb(item)"
+              >{{ item?.name }}</a
+            >
           </div>
         </li>
       </template>
     </ol>
 
     <!-- 辅助渲染面包屑，用于获取每个子元素的宽度 -->
-    <ol role="list" ref="hideBreadcrumbEl" class="z-breadcrumbs invisible absolute" :aaa="JSON.stringify(props.items)">
+    <ol
+      ref="hideBreadcrumbEl"
+      role="list"
+      class="z-breadcrumbs invisible absolute"
+      :aaa="JSON.stringify(props.items)"
+    >
       <li v-for="item in props.items" :key="item.index">
         <div class="z-breadcrumbs__item">
-          <ChevronRightIcon class="z-breadcrumbs__icon" v-if="item !== props.items[0]" />
-          <a @click.prevent.stop="clickBreadcrumb(item)" :href="item.href" class="z-breadcrumbs__text">{{ item.name }}</a>
+          <ChevronRightIcon v-if="item !== props.items[0]" class="z-breadcrumbs__icon" />
+          <a
+            :href="item.href"
+            class="z-breadcrumbs__text"
+            @click.prevent.stop="clickBreadcrumb(item)"
+            >{{ item.name }}</a
+          >
         </div>
       </li>
     </ol>
-    <a class="z-breadcrumbs__ellipsis invisible absolute" ref="hideBreadcrumbEllipsisEl">
-      ···
-    </a>
+    <a ref="hideBreadcrumbEllipsisEl" class="z-breadcrumbs__ellipsis invisible absolute"> ··· </a>
   </nav>
 </template>
 
 <script setup>
-import { ChevronRightIcon } from '@heroicons/vue/24/solid'
-import { useResizeObserver } from '@vueuse/core'
+import { ChevronRightIcon } from '@heroicons/vue/24/solid';
+import { useResizeObserver } from '@vueuse/core';
 
 let route = useRoute();
-console.log(route);
-
 
 // 组件接收的参数
 let props = defineProps({
   items: {
     type: Array,
-    default: []
+    default: [],
   },
   keepShowHeadSize: {
     type: Number,
-    default: 1
-  }
-})
+    default: 1,
+  },
+});
 
 // 检测到 props.items 变化时，重新给 props.items 中的每个元素添加一个 index 属性
-watch(() => props.items, () => {
-  props.items.forEach((item, index) => {
-    item.index = index;
-  })
-})
+watch(
+  () => props.items,
+  () => {
+    props.items.forEach((item, index) => {
+      item.index = index;
+    });
+  }
+);
 
 // 组件回调的事件
 // 定义一个面包屑点击事件，允许外部调用
-const emit = defineEmits()
+const emit = defineEmits();
 const clickBreadcrumb = (item) => {
-  emit('breadcrumb-click', item)
-}
-
+  emit('breadcrumb-click', item);
+};
 
 // 面包屑元素和隐藏面包屑元素
 const parentEl = ref(null);
@@ -107,14 +139,18 @@ const parentWidth = ref(0);
 // 页面宽度变化时，重新计算面包屑
 useResizeObserver(parentEl, (entries) => {
   resizeFunction(entries);
-})
+});
 
 // 面包屑元素宽度变化时，重新计算面包屑
-useMutationObserver(hideBreadcrumbEl, (entries) => {
-  resizeFunction(entries);
-}, {
-  childList: true,
-})
+useMutationObserver(
+  hideBreadcrumbEl,
+  (entries) => {
+    resizeFunction(entries);
+  },
+  {
+    childList: true,
+  }
+);
 
 const resizeFunction = (entries) => {
   const target = entries[0].target;
@@ -145,13 +181,13 @@ const resizeFunction = (entries) => {
 
   // 计算面包屑折叠数据
   computeFoldBreadcrumb();
-}
+};
 
 // 面包屑折叠和显示的数据列表
 const foldBreadcrumb = ref({
   head: [],
   fold: [],
-  show: []
+  show: [],
 });
 
 // 根据面包屑数据计算面包屑折叠数据
@@ -178,18 +214,28 @@ const computeFoldBreadcrumb = () => {
     // 获取面包屑折叠块的宽度
     let ellipsisWidth = getElementWidth(hideBreadcrumbEllipsisEl.value);
     baseWidth += ellipsisWidth;
-    console.log(`[z-breadcrumb] 所有面包屑元素宽度和大于父元素宽度，增加基础宽度：${ellipsisWidth}, 总基础宽度：${baseWidth}`);
+    console.log(
+      `[z-breadcrumb] 所有面包屑元素宽度和大于父元素宽度，增加基础宽度：${ellipsisWidth}, 总基础宽度：${baseWidth}`
+    );
   }
 
   // 如果需要保留第前 N 个面包屑，基础宽度就需要加上前 N 个面包屑的宽度
   if (props.keepShowHeadSize > 0) {
     for (let i = 0; i < props.keepShowHeadSize; i++) {
       baseWidth += itemsWidthArr.value[i];
-      console.log(`[z-breadcrumb] 需要保留第 ${i + 1} 个面包屑，增加基础宽度: ${itemsWidthArr.value[i]}, 总基础宽度 ${baseWidth}`);
+      console.log(
+        `[z-breadcrumb] 需要保留第 ${i + 1} 个面包屑，增加基础宽度: ${
+          itemsWidthArr.value[i]
+        }, 总基础宽度 ${baseWidth}`
+      );
     }
     if (overflow) {
-      baseWidth += (12 + 20);
-      console.log(`[z-breadcrumb] 所有面包屑元素宽度和大于父元素宽度，增加与前 ${props.keepShowHeadSize} 个保留的面包屑之间的基础宽度：${12 + 20}, 总基础宽度：${baseWidth}`);
+      baseWidth += 12 + 20;
+      console.log(
+        `[z-breadcrumb] 所有面包屑元素宽度和大于父元素宽度，增加与前 ${
+          props.keepShowHeadSize
+        } 个保留的面包屑之间的基础宽度：${12 + 20}, 总基础宽度：${baseWidth}`
+      );
     }
   }
   let showWidthSum = baseWidth;
@@ -202,43 +248,57 @@ const computeFoldBreadcrumb = () => {
       showWidthSum -= itemWidth;
       show = items.slice(i + 1);
       fold = items.slice(0, i + 1);
-      console.log(`[z-breadcrumb] 当前面包屑 ${item.name} 元素宽度：${itemWidth}, 显示总宽度 ${showWidthSum + itemWidth} 已超出父元素宽度：${parentWidth.value}, 将折叠面包屑：${fold.map(item => (item.name + '(' + itemWidth + ')'))}, 折叠后总宽度为:  ${showWidthSum}`);
+      console.log(
+        `[z-breadcrumb] 当前面包屑 ${item.name} 元素宽度：${itemWidth}, 显示总宽度 ${
+          showWidthSum + itemWidth
+        } 已超出父元素宽度：${parentWidth.value}, 将折叠面包屑：${fold.map(
+          (item) => item.name + '(' + itemWidth + ')'
+        )}, 折叠后总宽度为:  ${showWidthSum}`
+      );
       break;
     } else {
-      console.log(`[z-breadcrumb] 当前面包屑 ${item.name} 元素宽度：${itemWidth}, 父元素宽度：${parentWidth.value}, 显示总宽度: ${showWidthSum}, 无需折叠`);
+      console.log(
+        `[z-breadcrumb] 当前面包屑 ${item.name} 元素宽度：${itemWidth}, 父元素宽度：${parentWidth.value}, 显示总宽度: ${showWidthSum}, 无需折叠`
+      );
     }
+  }
+  if (items && show[show.length - 1]?.index != items[items.length - 1].index) {
+    show = [...show, items[items.length - 1]];
   }
 
   foldBreadcrumb.value = { head, fold, show };
-}
-
+};
 
 // 获取元素的实际宽度，包括 margin-left 和 margin-right 值
 const getElementWidth = (element) => {
   let boundingClientRect = element.getBoundingClientRect();
-  return boundingClientRect.width + parseFloat(getComputedStyle(element).marginLeft) + parseFloat(getComputedStyle(element).marginRight);
-}
+  return (
+    boundingClientRect.width +
+    parseFloat(getComputedStyle(element).marginLeft) +
+    parseFloat(getComputedStyle(element).marginRight)
+  );
+};
 
 const debugFn = () => {
   console.log('foldBreadcrumb', foldBreadcrumb.value);
-}
+};
 </script>
 
 <style scoped lang="scss">
 .z-breadcrumbs {
-  @apply flex flex-wrap overflow-hidden items-center space-x-3;
+  @apply flex flex-wrap items-center space-x-3 overflow-hidden;
 
   .z-breadcrumbs__item {
     @apply flex items-center;
   }
   .z-breadcrumbs__icon {
-    @apply flex-shrink-0 h-3 font-bold w-3 text-gray-500;
+    @apply h-3 w-3 flex-shrink-0 font-bold text-gray-500;
   }
   .z-breadcrumbs__text {
     @apply ml-3 text-[13px] font-semibold text-gray-600 hover:text-gray-700;
 
     &.disable {
-      @apply text-gray-400 pointer-events-none;
+      @apply pointer-events-none text-gray-400;
     }
   }
 }

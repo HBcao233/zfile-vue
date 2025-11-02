@@ -3,7 +3,7 @@
     <template #title>
       <div class="flex justify-items-center">
         <router-link :to="to">
-          <i-mdi-arrow-left class="my-auto h-full mr-2 cursor-pointer" />
+          <i-mdi-arrow-left class="my-auto mr-2 h-full cursor-pointer" />
         </router-link>
         <div class="flex">
           <span>{{ title }}</span>
@@ -29,7 +29,7 @@ const props = defineProps({
   },
   pro: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 </script>

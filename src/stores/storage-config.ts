@@ -1,9 +1,8 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import useFileSelect from "~/composables/file/useFileSelect";
+import useFileSelect from '~/composables/file/useFileSelect';
 
 let { selectStatistics } = useFileSelect();
-
 
 // 当前存储源的配置信息，数据来源为服务端配置。请求存储源后会获取其配置信息。
 const useStorageConfigStore = defineStore('storageConfigStore', {
@@ -20,7 +19,7 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
         tableSize: 'small',
         rootShowStorage: true,
         fileClickMode: 'dbclick',
-		mobileFileClickMode: 'dbclick',
+        mobileFileClickMode: 'dbclick',
         showDocument: false,
         debugMode: false,
         icp: '',
@@ -39,21 +38,20 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
         defaultSortField: 'name',
         defaultSortOrder: 'asc',
         linkExpireTimes: '',
-        forceBackendAddress: ''
+        forceBackendAddress: '',
       },
       loginInfo: {
         isLogin: null,
         isAdmin: null,
         username: '',
-        nickname: ''
+        nickname: '',
       },
       folderConfig: {
         readmeText: null,
         proxyUpload: false,
         readmeDisplayMode: null,
         defaultSwitchToImgMode: false,
-        permission: {
-        },
+        permission: {},
         metadata: {
           uploadType: null,
           supportRenameFolder: null,
@@ -65,9 +63,9 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
         rootPath: null,
       },
       user: {
-      	rootPath: '',
-      }
-    }
+        rootPath: '',
+      },
+    };
   },
   getters: {
     permission: (state) => {
@@ -86,10 +84,12 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
         link: (pathLink || shortLink) && selectStatistics.value.isAllFile,
         pathLink: pathLink,
         shortLink: shortLink,
-        bothLink: (pathLink && shortLink) && selectStatistics.value.isAllFile,
+        bothLink: pathLink && shortLink && selectStatistics.value.isAllFile,
 
         copy: originPermission.copy,
         move: originPermission.move,
+        compress: originPermission.compress,
+        decompress: originPermission.decompress,
         delete: originPermission.delete,
         upload: originPermission.upload,
         uploadFolder: originPermission.upload && originPermission.newFolder,
@@ -97,14 +97,13 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
         newFolder: originPermission.newFolder,
         batchDownload: download && originPermission.batchDownload,
         packageDownload: download && originPermission.packageDownload,
-
-      }
-    }
+      };
+    },
   },
   actions: {
-	updateUserRootPath(val: string) {
-		this.user.rootPath = val;
-	},
+    updateUserRootPath(val: string) {
+      this.user.rootPath = val;
+    },
     updateGlobalConfig(val: any) {
       this.globalConfig = val;
     },
@@ -115,6 +114,6 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
       this.loginInfo = val;
     },
   },
-})
+});
 
 export default useStorageConfigStore;

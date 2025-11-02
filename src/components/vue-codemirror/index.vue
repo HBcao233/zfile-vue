@@ -1,5 +1,5 @@
 <template>
-  <div class="example" ref="codemirrorRef">
+  <div ref="codemirrorRef" class="example">
     <toolbar
       :config="config"
       :themes="Object.keys(themes)"
@@ -8,29 +8,31 @@
       :disabled="config.disabled"
       :readonly="config.readonly"
       @encoding="ensureEncoding"
-      @language="ensureLanguageCode" />
+      @language="ensureLanguageCode"
+    />
     <div class="divider"></div>
     <editor
       v-if="modelValue"
-      :fileName="fileName"
+      :file-name="fileName"
       :config="config"
       :theme="currentTheme"
       :language="currentLangCode"
-      :code="encodeModelValue" />
+      :code="encodeModelValue"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import languageEncoding from "detect-file-encoding-and-language";
-import languages from './languages'
-import encodings from './encodings'
-import themes from './themes'
-import Toolbar from './toolbar.vue'
-import Editor from './editor.vue'
-import { ToolBarConfig } from "./types";
-import { defineProps } from "vue";
+import languageEncoding from 'detect-file-encoding-and-language';
+import languages from './languages';
+import encodings from './encodings';
+import themes from './themes';
+import Toolbar from './toolbar.vue';
+import Editor from './editor.vue';
+import { ToolBarConfig } from './types';
+import { defineProps } from 'vue';
 
-const config:ToolBarConfig = reactive({
+const config: ToolBarConfig = reactive({
   disabled: false,
   readonly: false,
   indentWithTab: true,
@@ -41,88 +43,91 @@ const config:ToolBarConfig = reactive({
   encoding: 'UTF-8',
   theme: 'default',
   lineWrapping: true,
-})
+});
 
-const langCodeMap = reactive(new Map<string, () => any>())
-const currentLangCode = computed(() => langCodeMap.get(config.language)!)
+const langCodeMap = reactive(new Map<string, () => any>());
+const currentLangCode = computed(() => langCodeMap.get(config.language)!);
 const currentTheme = computed(() => {
-  return config.theme !== 'default' ? themes[config.theme] : void 0
-})
+  return config.theme !== 'default' ? themes[config.theme] : void 0;
+});
 
 const props = defineProps({
   fileName: {
     type: String,
-    required: true
+    required: true,
   },
   modelValue: {
     type: Blob,
-    required: true
+    required: true,
   },
   language: {
     type: String,
-    default: 'javascript'
+    default: 'javascript',
   },
   readonly: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-config.readonly = props.readonly
+watchEffect(() => {
+  config.readonly = props.readonly;
+});
 
 // 编码后的 modelValue
-const encodeModelValue = ref<string>('')
+const encodeModelValue = ref<string>('');
 
 const ensureLanguageCode = async (targetLanguage: string) => {
-  config.language = targetLanguage
-  const delayPromise = () => new Promise((resolve) => window.setTimeout(resolve, 260))
+  config.language = targetLanguage;
+  const delayPromise = () => new Promise((resolve) => window.setTimeout(resolve, 260));
   if (langCodeMap.has(targetLanguage)) {
-    await delayPromise()
+    await delayPromise();
   } else {
     if (!languages[targetLanguage]) {
-      config.language = 'javascript'
-      targetLanguage = 'javascript'
+      config.language = 'javascript';
+      targetLanguage = 'javascript';
     }
-    const [result] = await Promise.all([languages[targetLanguage](), delayPromise()])
-    langCodeMap.set(targetLanguage, result.default)
+    const [result] = await Promise.all([languages[targetLanguage](), delayPromise()]);
+    langCodeMap.set(targetLanguage, result.default);
   }
-}
+};
 
 const ensureEncoding = (encoding: string) => {
   if (encoding) {
-    config.encoding = encoding
-    processEncoding(config.encoding)
+    config.encoding = encoding;
+    processEncoding(config.encoding);
   } else {
     languageEncoding(props.modelValue).then((fileInfo) => {
       if (fileInfo.encoding && fileInfo.confidence.encoding && fileInfo.confidence.encoding > 0.5) {
-        ElMessage.success(`检测到文件编码为 ${fileInfo.encoding}, 可能性为 ${fileInfo.confidence.encoding * 100}%`)
+        ElMessage.success(
+          `检测到文件编码为 ${fileInfo.encoding}, 可能性为 ${fileInfo.confidence.encoding * 100}%`
+        );
       } else {
         ElMessage.warning({
           message: '自动检测文件编码未成功，将使用默认编码 UTF-8 打开.',
-          duration: 5000
-        })
-        fileInfo.encoding = 'UTF-8'
+          duration: 5000,
+        });
+        fileInfo.encoding = 'UTF-8';
       }
 
-      config.encoding = fileInfo.encoding || 'UTF-8'
-      processEncoding(config.encoding)
-    })
+      config.encoding = fileInfo.encoding || 'UTF-8';
+      processEncoding(config.encoding);
+    });
   }
-}
+};
 
 const processEncoding = (encoding: string) => {
-  let fd = new FileReader;
+  let fd = new FileReader();
   fd.onload = function () {
-    encodeModelValue.value = fd.result as string
-  }
+    encodeModelValue.value = fd.result as string;
+  };
   fd.readAsText(props.modelValue, encoding);
-}
+};
 
 onBeforeMount(() => {
-  ensureLanguageCode(props.language!)
-  ensureEncoding('')
-})
-
+  ensureLanguageCode(props.language!);
+  ensureEncoding('');
+});
 
 const useAutoHeight = () => {
   const codemirrorRef = ref<HTMLElement | null>(null);
@@ -134,7 +139,9 @@ const useAutoHeight = () => {
     const toolbarHeight = codemirrorRef.value?.querySelector('.toolbar')?.offsetHeight || 0;
     const dividerHeight = 9;
     const footerHeight = codemirrorRef.value?.querySelector('.footer')?.offsetHeight || 0;
-    editorHeight.value = `calc(${bodyHeight}px - ${toolbarHeight + (dividerHeight * 2) + footerHeight + 50}px)`;
+    editorHeight.value = `calc(${bodyHeight}px - ${
+      toolbarHeight + dividerHeight * 2 + footerHeight + 50
+    }px)`;
   };
 
   // ResizeObserver to watch for changes in parent element size
@@ -158,20 +165,20 @@ const useAutoHeight = () => {
 
   return {
     codemirrorRef,
-    editorHeight
-  }
-}
+    editorHeight,
+  };
+};
 
-const { codemirrorRef, editorHeight } = useAutoHeight()
+const { codemirrorRef, editorHeight } = useAutoHeight();
 </script>
 
 <style lang="scss" scoped>
-@import '~/styles/code-editor-variables.scss';
+@use '~/styles/code-editor-variables.scss' as *;
 
 .example {
   .divider {
     height: 1px;
-    background-color: $border-color;
+    background-color: var(--theme-border);
   }
 
   :deep(.cm-editor) {

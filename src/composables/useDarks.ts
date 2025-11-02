@@ -1,4 +1,4 @@
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
-export default () => ({ isDark, toggleDark })
+export default () => ({ isDark, toggleDark });

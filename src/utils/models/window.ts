@@ -1,5 +1,5 @@
 // 当前页面宽高
-export const { width: currentPageWidth, height: currentPageHeight } = useWindowSize()
+export const { width: currentPageWidth, height: currentPageHeight } = useWindowSize();
 
 // 是否为移动端
 export const isMobile = computed(() => {

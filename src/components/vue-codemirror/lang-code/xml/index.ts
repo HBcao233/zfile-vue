@@ -1,2 +1,2 @@
-import { xml } from '@codemirror/lang-xml'
-export default xml
+import { xml } from '@codemirror/lang-xml';
+export default xml;

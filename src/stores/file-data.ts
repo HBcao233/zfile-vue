@@ -1,9 +1,9 @@
 // @ts-ignore
-import { getFileType, getFileIconName } from "../utils";
-import { defineStore } from 'pinia'
+import { getFileType, getFileIconName } from '../utils';
+import { defineStore } from 'pinia';
 
 // @ts-ignore
-import useStorageConfigStore from "./storage-config";
+import useStorageConfigStore from './storage-config';
 
 // 当前存储源的配置信息，数据来源为服务端配置。请求存储源后会获取其配置信息。
 const useFileDataStore = defineStore('fileDataStore', {
@@ -15,8 +15,8 @@ const useFileDataStore = defineStore('fileDataStore', {
         id: null,
         type: {
           description: '',
-          key: ''
-        }
+          key: '',
+        },
       },
       imgMode: false,
       newImgMode: false,
@@ -26,14 +26,14 @@ const useFileDataStore = defineStore('fileDataStore', {
       loadFileSize: -1,
       audioArray: [],
       audioIndex: 0,
-    }
+    };
   },
   getters: {
     filterFileByType: (state) => {
       return (type: string) => {
-        return state.fileListSource.filter(function (item:any) {
+        return state.fileListSource.filter(function (item: any) {
           if (item.type === 'BACK') {
-            return false
+            return false;
           }
           let name = item.name;
           let suffix = name.substr(name.lastIndexOf('.') + 1).toLowerCase();
@@ -41,13 +41,13 @@ const useFileDataStore = defineStore('fileDataStore', {
         });
       };
     },
-    fileList: state => {
+    fileList: (state) => {
       if (state.loadFileSize === -1) return [];
       let firstIsBack = state.fileListSource[0]?.type === 'BACK';
       let toSize = firstIsBack ? state.loadFileSize + 1 : state.loadFileSize;
       toSize = toSize > state.fileListSource.length ? state.fileListSource.length : toSize;
       let tableData = state.fileListSource.slice(0, toSize);
-      tableData.forEach((item:any) => {
+      tableData.forEach((item: any) => {
         // 生成图标
         if (!item.icon) {
           item['icon'] = getFileIconName(item);
@@ -66,15 +66,15 @@ const useFileDataStore = defineStore('fileDataStore', {
       });
       return tableData;
     },
-    getFileUrlByName: state => {
+    getFileUrlByName: (state) => {
       return (name: string) => {
-        let item = state.fileListSource.find((item:any) => item.name === name);
+        let item = state.fileListSource.find((item: any) => item.name === name);
         if (item) {
           return item.url;
         }
         return '';
       };
-    }
+    },
   },
   actions: {
     updateCurrentStorageSource(val: any) {
@@ -101,8 +101,8 @@ const useFileDataStore = defineStore('fileDataStore', {
     },
     updateLoadFileSize(val: number) {
       this.loadFileSize = val;
-    }
+    },
   },
-})
+});
 
 export default useFileDataStore;

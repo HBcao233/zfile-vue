@@ -1,14 +1,12 @@
 <template>
-	<index></index>
+  <index></index>
 </template>
 
 <script setup>
-import Index from '~/pages/admin/storage-edit/index.vue'
+import Index from '~/pages/admin/storage-edit/index.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <route lang="yaml">
 meta:

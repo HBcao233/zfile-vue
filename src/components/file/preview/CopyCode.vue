@@ -1,28 +1,28 @@
 <template>
   <div class="copy-content">
     <!-- 复制按钮 -->
-    <div
-      class="copy-btn code-data-copy"
-      @click="copyMessage">
+    <div class="copy-btn code-data-copy" @click="copyMessage">
       <i-ic-baseline-content-copy />
     </div>
   </div>
 </template>
 
 <script setup>
-import { toClipboard } from '@soerenmartius/vue3-clipboard'
+import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
 const props = defineProps({
-  code: String
+  code: String,
 });
 
 const copyMessage = () => {
-  toClipboard(props.code).then(() => {
-    ElMessage.success('复制成功');
-  }).catch(() => {
-    ElMessage.success('复制失败');
-  })
-}
+  toClipboard(props.code)
+    .then(() => {
+      ElMessage.success('复制成功');
+    })
+    .catch(() => {
+      ElMessage.success('复制失败');
+    });
+};
 </script>
 
 <style lang="scss" scoped>

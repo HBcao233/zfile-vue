@@ -23,10 +23,12 @@
 	"rules": {
 		// 允许相同组件名
 		"vue/multi-word-component-names": "off",
-		// prettier 作为规则
-		"prettier/prettier": "error",
 		// 禁止使用 var，而应该用 let 或 const
 		"no-var": "error",
-		"global-require": 0
+		// prettier 作为规则
+		"prettier/prettier": "warn",
+		"global-require": 0,
+		"no-unused-vars": "warn",
+		"no-useless-escape": "warn"
 	}
 }

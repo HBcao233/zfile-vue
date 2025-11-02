@@ -1,59 +1,56 @@
 <template>
   <div class="zfile-batch-operator-result-dialog-wrapper">
     <el-dialog
+      v-model="visible"
       custom-class="zfile-batch-operator-result-dialog"
       title="批量操作结果"
-      v-model="visible"
       draggable
       top="10vh"
       :close-on-click-modal="false"
-      :close-on-press-escape="false">
-      <el-table
-        class="mt-5"
-        :data="operatorResultListComputed"
-        border
-        stripe>
-        <el-table-column
-          prop="success"
-          label="文件"
-          show-overflow-tooltip>
-          <template #header="{row}">
-            <div class="flex justify-between items-center">
+      :close-on-press-escape="false"
+    >
+      <el-table class="mt-5" :data="operatorResultListComputed" border stripe>
+        <el-table-column prop="success" label="文件" show-overflow-tooltip>
+          <template #header="{ row }">
+            <div class="flex items-center justify-between">
               <span>文件文件文件文件</span>
               <el-checkbox v-model="containAll">包含成功</el-checkbox>
             </div>
           </template>
-          <template #default="{row}">
+          <template #default="{ row }">
             <span class="mr-2">
-              <CheckCircleIcon v-if="row.success" class="inline h-4 text-green-500 box animate__animated animate__fadeIn"/>
-              <XCircleIcon   v-else class="inline h-4 text-red-400 box animate__animated animate__fadeIn"/>
+              <CheckCircleIcon
+                v-if="row.success"
+                class="box animate__animated animate__fadeIn inline h-4 text-green-500"
+              />
+              <XCircleIcon
+                v-else
+                class="box animate__animated animate__fadeIn inline h-4 text-red-400"
+              />
             </span>
             <span>{{ concatPath(row.path, row.name) }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="message"
-          label="消息"
-          show-overflow-tooltip>
-        </el-table-column>
+        <el-table-column prop="message" label="消息" show-overflow-tooltip> </el-table-column>
       </el-table>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { concatPath } from "~/utils";
-import useBatchOperatorResult from "~/composables/file/useBatchOperatorResult";
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/solid";
+import { concatPath } from '~/utils';
+import useBatchOperatorResult from '~/composables/file/useBatchOperatorResult';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid';
 const { visible, operatorResultList } = useBatchOperatorResult();
 
 const containAll = ref(false);
 
 const operatorResultListComputed = computed(() => {
-  return containAll.value ? operatorResultList.value: operatorResultList.value.filter(item => !item.success);
+  return containAll.value
+    ? operatorResultList.value
+    : operatorResultList.value.filter((item) => !item.success);
 });
-
 </script>
 
 <style scoped lang="scss">
@@ -67,7 +64,7 @@ const operatorResultListComputed = computed(() => {
   }
 
   :deep(.el-dialog__body) {
-    @apply h-[70vh] sm:h-[75vh] overflow-auto;
+    @apply h-[70vh] overflow-auto sm:h-[75vh];
   }
 }
 </style>

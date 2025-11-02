@@ -1,10 +1,7 @@
 module.exports = {
   // important: true,
   mode: 'jit',
-  content: [
-      './index.html',
-      './src/**/*.{vue,js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     // textColor: {
     //   'danger': '#ffed4a',
@@ -13,25 +10,25 @@ module.exports = {
     // },
     extend: {
       spacing: {
-        '26': '6.5rem',
+        4: '1rem',
       },
       colors: {
-        'info': '#2d8cf0'
+        info: '#2d8cf0',
       },
       backgroundColor: {
-        'blue-info': '#2d8cf0'
+        'blue-info': '#2d8cf0',
       },
     },
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
       '2xl': '1536px',
-      '3xl': '1920px'
-    }
+      '3xl': '1920px',
+    },
   },
   variants: {
     extend: {},
-  }
-}
+  },
+};

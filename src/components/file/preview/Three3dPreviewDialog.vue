@@ -6,22 +6,22 @@
     width="90%"
     class="zfile-three-3d-dialog"
     :title="name"
-    :showFooter="false"
+    :show-footer="false"
   >
-    <Three3dPreview v-if="visible" :fileName="name" :fileUrl="url"/>
+    <Three3dPreview v-if="visible" :file-name="name" :file-url="url" />
   </z-dialog>
 </template>
 
 <script setup>
-import ZDialog from "~/components/common/dialog/ZDialog.vue";
-import MarkdownViewerDialogAsyncLoading from "~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue";
+import ZDialog from '~/components/common/dialog/ZDialog.vue';
+import MarkdownViewerDialogAsyncLoading from '~/components/file/preview/MarkdownViewerDialogAsyncLoading.vue';
 
 const Three3dPreview = defineAsyncComponent({
-  loader: () => import("~/components/file/preview/Three3dPreview.vue"),
-  loadingComponent: MarkdownViewerDialogAsyncLoading
-})
+  loader: () => import('~/components/file/preview/Three3dPreview.vue'),
+  loadingComponent: MarkdownViewerDialogAsyncLoading,
+});
 
-import useThree3dPreviewDialog from "~/composables/file/useThree3dPreviewDialog";
+import useThree3dPreviewDialog from '~/composables/file/useThree3dPreviewDialog';
 const { visible, name, url } = useThree3dPreviewDialog();
 </script>
 

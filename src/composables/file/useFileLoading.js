@@ -1,7 +1,7 @@
 const loading = ref(false);
 const firstLoading = ref(false);
 
-import useGlobalConfigStore from "~/stores/global-config";
+import useGlobalConfigStore from '~/stores/global-config';
 let globalConfigStore = useGlobalConfigStore();
 
 // 是否启用骨架屏 loading
@@ -14,11 +14,13 @@ let skeletonLoading = computed(() => {
     // 如果骨架屏模式为是 '始终加载'
     if (skeletonShow === 'always') {
       return loading.value;
-    } else {  // 如果骨架屏模式为是仅 '首次加载'
+    } else {
+      // 如果骨架屏模式为是仅 '首次加载'
       // 已经首次加载后, 则不使用骨架屏
       return firstLoading.value ? false : loading.value;
     }
-  } else {    // 如果未启用骨架屏, 则直接返回 false
+  } else {
+    // 如果未启用骨架屏, 则直接返回 false
     return false;
   }
 });
@@ -29,12 +31,10 @@ let basicLoading = computed(() => {
 });
 
 export default function useFileLoading() {
-
   return {
     loading,
     firstLoading,
     skeletonLoading,
-    basicLoading
+    basicLoading,
   };
-
 }

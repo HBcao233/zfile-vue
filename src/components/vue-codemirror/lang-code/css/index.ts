@@ -1,2 +1,2 @@
-import { css } from '@codemirror/lang-css'
-export default css
+import { css } from '@codemirror/lang-css';
+export default css;

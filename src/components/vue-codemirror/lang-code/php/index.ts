@@ -1,3 +1,3 @@
-import { php } from '@codemirror/lang-php'
+import { php } from '@codemirror/lang-php';
 
-export default php
+export default php;
